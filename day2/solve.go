@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() {
-	file, _ := os.Open("./day2/small.txt")
+	file, _ := os.Open("./day2/input.txt")
 	defer file.Close()
 	scnr := bufio.NewScanner(file)
 	var score int64
@@ -17,13 +17,14 @@ func Solve() {
 		'Z': 3,
 	}
 	winMap := map[byte]byte{
-		'X': 'C',
-		'Y': 'A',
-		'Z': 'B',
+		'X': 'Z',
+		'Y': 'X',
+		'Z': 'Y',
 	}
 	for scnr.Scan() {
 		line := scnr.Text()
 		op, me := line[0], line[2]
+		op += 'X' - 'A'
 		score += scMap[me]
 		if winMap[me] == op {
 			score += 6
@@ -31,5 +32,5 @@ func Solve() {
 			score += 3
 		}
 	}
-	fmt.Println()
+	fmt.Println(score)
 }
