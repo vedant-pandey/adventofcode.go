@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"main/day1"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	day1.Solve()
 }
