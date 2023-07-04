@@ -1,3 +1,3 @@
-module adventofcode
+module main
 
 go 1.20

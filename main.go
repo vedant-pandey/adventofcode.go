@@ -1,4 +1,4 @@
-package adventofcodego
+package main
 
 import "fmt"
 
