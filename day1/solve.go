@@ -4,14 +4,26 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func Solve() {
-	file, _ := os.OpenFile("input.txt", os.O_RDONLY, 0644)
+	file, _ := os.Open("./day1/input.txt")
 	defer file.Close()
 	scnr := bufio.NewScanner(file)
+	maxCal := 0
+	curCal := 0
 	for scnr.Scan() {
-		fmt.Println(scnr.Text())
+		line := scnr.Text()
+		if line == "" {
+			if curCal > maxCal {
+				maxCal = curCal
+			}
+			curCal = 0
+		} else {
+			val, _ := strconv.Atoi(line)
+			curCal += val
+		}
 	}
-
+	fmt.Println(maxCal)
 }
