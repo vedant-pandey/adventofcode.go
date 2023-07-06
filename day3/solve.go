@@ -10,33 +10,24 @@ func Solve() {
   file, _ := os.Open("./day3/input.txt")
   defer file.Close()
   scnr := bufio.NewScanner(file)
-  prio := map[byte]int{}
-  var i byte
-  for i = 'a'; i < 'z'; i++ {
-    prio[i] = int(i) - int('a') + 1
-  }
-  for i = 'A'; i < 'Z'; i++ {
-    prio[i] = int(i) - int('A') + 27
-  }
   sum := uint(0)
   for scnr.Scan() {
-    rucksack := scnr.Text()
-		var bitSet uint64
-		for i, item := range rucksack {
-			prio := priority(item)
-			mask := uint64(1) << prio
-			if i < len(rucksack)/2 {
-				bitSet |= mask
-			} else if bitSet&mask == mask {
-				sum += prio
-				bitSet &^= mask 
-			}
-		}
+    line := scnr.Text()
+    leftMap := map[byte]bool{}
+    for i := 0; i < len(line)/2; i++ {
+      leftMap[line[i]] = true
+    }
+    for i := len(line)/2; i < len(line); i++ {
+      if (leftMap[line[i]]) {
+        sum += priority(line[i])
+        break
+      }
+    }
   }
   fmt.Println(sum)
 }
 
-func priority(item rune) uint {
+func priority(item byte) uint {
 	if item >= 'a' && item <= 'z' {
 		return uint(item-'a') + 1
 	}
