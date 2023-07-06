@@ -1,9 +1,10 @@
 package day3
 
 import (
-  "bufio"
-  "fmt"
-  "os"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
 )
 
 func Solve() {
@@ -22,14 +23,10 @@ func Solve() {
   j := 0
   for scnr.Scan() {
     line := scnr.Text()
-    charMap := map[byte]bool{}
+    rightPart := line[len(line)/2:]
     for i := 0; i < len(line)/2; i++ {
-      charMap[line[i]] = true
-    }
-    for i := len(line)/2; i <len(line); i++ {
-      if charMap[line[i]] {
+      if strings.Contains(rightPart, string(line[i])) {
         score += int64(prio[line[i]])
-        fmt.Println(j, string(line[i]))
         break
       }
     }
