@@ -21,7 +21,12 @@ func Solve() {
     fEn, _ := strconv.Atoi(elveRanges[0][1])
     sSt, _ := strconv.Atoi(elveRanges[1][0])
     sEn, _ := strconv.Atoi(elveRanges[1][1])
-    if (fSt >= sSt && fEn <= sEn) || (sSt >= fSt && sEn <= fEn) {
+    // part 1 soln
+    // if (fSt >= sSt && fEn <= sEn) || (sSt >= fSt && sEn <= fEn) {
+    //   soln += 1
+    // }
+    // part 2 soln
+    if (fSt <= sSt && sSt <= fEn) || (sSt <= fSt && fSt <= sEn) {
       soln += 1
     }
   }
