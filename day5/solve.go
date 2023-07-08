@@ -9,7 +9,7 @@ import (
 )
 
 func Solve() {
-	file, _ := os.Open("./day5/small.txt")
+	file, _ := os.Open("./day5/input.txt")
 	defer file.Close()
 	scnr := bufio.NewScanner(file)
 	stacks := [][]string{}
@@ -29,7 +29,6 @@ func Solve() {
 			lines = append(lines, line)
 		}
 	}
-	fmt.Println(stacks)
 	soln := doCalculation(stacks, lines)
 	fmt.Println(soln)
 }
@@ -41,30 +40,30 @@ func doCalculation(stacks [][]string, lines []string) string {
 		src, _ := strconv.Atoi(words[3])
 		dst, _ := strconv.Atoi(words[5])
 		for i := 0; i < cnt; i++ {
-      fmt.Println(stacks)
-			val := stacks[src - 1][0]
-			stacks[src - 1] = stacks[src - 1][1:]
-			stacks[dst - 1] = append(stacks[dst - 1], val)
+			val := stacks[src-1][len(stacks[src-1]) - 1]
+			stacks[src-1] = stacks[src-1][:len(stacks[src-1])-1]
+			stacks[dst-1] = append(stacks[dst-1], val)
 		}
 	}
 	soln := ""
 	for _, stack := range stacks {
-		soln += string(stack[0])
+		soln += string(stack[len(stack)-1])
 	}
 	return soln
 }
 
 func buildStack(lines []string) [][]string {
 	var stacks [][]string
+
 	for i := 0; i <= len(lines[0])+1; i += 4 {
 		stacks = append(stacks, []string{})
 	}
 	for _, line := range lines {
 		for i := 0; 4*i < len(line); i++ {
 			if line[4*i] == '[' {
-				stacks[i] = append(stacks[i], string(line[4*i+1]))
+				stacks[i] = append([]string{string(line[4*i+1])}, stacks[i]...)
 			}
 		}
 	}
-  return stacks[:len(stacks)-1]
+	return stacks[:len(stacks)-1]
 }
