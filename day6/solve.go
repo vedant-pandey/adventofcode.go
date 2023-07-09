@@ -13,31 +13,50 @@ func Solve() {
 	soln := -1
 	for scnr.Scan() {
 		line := scnr.Text()
-		wrd := [...]byte{line[0], line[1], line[2], line[3]}
-		for i := 4; i < len(line); i++ {
-			if checkUnique(&wrd) {
-				soln = i - 1
-				break
-			}
-			moveIt(&wrd, line[i])
-		}
-		if soln == -1 {
-			soln = len(line)
-		}
-    fmt.Println(soln+1)
+		solve2(line, soln)
 	}
 }
 
-func moveIt(wrd *[4]byte, c byte) {
-	wrd[0] = wrd[1]
-	wrd[1] = wrd[2]
-	wrd[2] = wrd[3]
-	wrd[3] = c
+func solve2(line string, soln int) {
+	wrd := []byte{line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13]}
+	for i := len(wrd); i < len(line); i++ {
+		if checkUnique(&wrd) {
+			soln = i - 1
+			break
+		}
+		moveIt(&wrd, line[i])
+	}
+	if soln == -1 {
+		soln = len(line)
+	}
+	fmt.Println(soln + 1)
 }
 
-func checkUnique(wrd *[4]byte) bool {
-	myMap := make(map[byte]bool, 4)
-	for _, ch := range wrd {
+func solve(line string, soln int) {
+	wrd := []byte{line[0], line[1], line[2], line[3]}
+	for i := 4; i < len(line); i++ {
+		if checkUnique(&wrd) {
+			soln = i - 1
+			break
+		}
+		moveIt(&wrd, line[i])
+	}
+	if soln == -1 {
+		soln = len(line)
+	}
+	fmt.Println(soln + 1)
+}
+
+func moveIt(wrd *[]byte, c byte) {
+	for i := 0; i < len(*wrd)-1; i++ {
+		(*wrd)[i] = (*wrd)[i+1]
+	}
+	(*wrd)[len(*wrd)-1] = c
+}
+
+func checkUnique(wrd *[]byte) bool {
+	myMap := make(map[byte]bool, len(*wrd))
+	for _, ch := range *wrd {
 		if myMap[ch] {
 			return false
 		}
