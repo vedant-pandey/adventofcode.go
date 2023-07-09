@@ -14,12 +14,6 @@ func Solve() {
 	scnr := bufio.NewScanner(file)
 	stacks := [][]string{}
 	lines := []string{}
-	/*
-
-	  1 -> 0 , 2
-	  2 -> 4 , 6
-
-	*/
 	for scnr.Scan() {
 		line := scnr.Text()
 		if len(line) == 0 {
@@ -29,8 +23,32 @@ func Solve() {
 			lines = append(lines, line)
 		}
 	}
-	soln := doCalculation(stacks, lines)
+	soln := doCalculation2(stacks, lines)
 	fmt.Println(soln)
+}
+
+func doCalculation2(stacks [][]string, lines []string) string {
+	for _, line := range lines {
+		words := strings.Split(line, " ")
+		cnt, _ := strconv.Atoi(words[1])
+		srcInd, _ := strconv.Atoi(words[3])
+		dstInd, _ := strconv.Atoi(words[5])
+		srcInd--
+		dstInd--
+		src := stacks[srcInd]
+		dst := stacks[dstInd]
+		pushRange := src[len(src)-cnt:]
+		src = src[:len(src)-cnt]
+		dst = append(dst, pushRange...)
+    stacks[srcInd] = src
+    stacks[dstInd] = dst
+	}
+	soln := ""
+	for _, stack := range stacks {
+		soln += string(stack[len(stack)-1])
+	}
+	return soln
+
 }
 
 func doCalculation(stacks [][]string, lines []string) string {
@@ -40,7 +58,7 @@ func doCalculation(stacks [][]string, lines []string) string {
 		src, _ := strconv.Atoi(words[3])
 		dst, _ := strconv.Atoi(words[5])
 		for i := 0; i < cnt; i++ {
-			val := stacks[src-1][len(stacks[src-1]) - 1]
+			val := stacks[src-1][len(stacks[src-1])-1]
 			stacks[src-1] = stacks[src-1][:len(stacks[src-1])-1]
 			stacks[dst-1] = append(stacks[dst-1], val)
 		}
